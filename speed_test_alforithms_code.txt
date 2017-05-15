@@ -1,0 +1,218 @@
+#pragma once
+
+class BubbleSort {
+public:
+	BubbleSort(int nElems, int data[]);
+	void sort(void);
+	void print_data(void);
+	void sort_first_elem(void);
+
+private:
+	int nElems = 1;
+	int *data = new int[nElems];
+	void swap(int a, int b);
+};
+
+#include "stdafx.h"
+#include "SelectionSort.h"
+#include <iostream>
+
+using namespace std;
+
+SelectionSort::SelectionSort(int nElems, int data[]) {
+	for (size_t i = 0; i < nElems; i++) {
+		this->data[i] = data[i];
+		cout << data[i] << endl;
+	}
+}
+
+void SelectionSort::display_data(void) {
+	for (size_t i = 0; i < nElems; i++) {
+		cout << data[i] << endl;;
+	}
+}
+
+void SelectionSort::swap(int a, int b) {
+	int tmp = data[a];
+	data[a] = data[b];
+	data[b] = tmp;
+}
+
+/*===============================================================
+ * Class to sort integers
+ *===============================================================
+ *	@author		Rick Kock
+ *	@version	1
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+#include "stdafx.h"
+#include "BubbleSort.h"
+#include <iostream>
+
+using namespace std;
+
+//================================================================
+
+BubbleSort::BubbleSort(int nElems, int data[]) : nElems(nElems) {
+	for (size_t i = 0; i < nElems; i++) {
+		this->data[i] = data[i];
+	}
+}
+
+//================================================================
+
+/**
+* Uses bubble sort: sort data array by going through the array
+* and checks if the next integer is bigger than the current integer
+* value. If the next integer is smaller, the values should be swapped.
+*/
+void BubbleSort::sort(void) {
+	for (int i = nElems; i > -1; i--) {	
+		sort_first_elem();
+	}
+}
+
+/**
+* Sorts the elements in pairs only one time. 
+*/
+void BubbleSort::sort_first_elem(void) {
+	int i = nElems-1;
+
+	while (i > -1) {
+
+		// check to see if not beyond beginning of array
+		if ((i - 1) > -1) { 
+			if (data[i] <= data[i - 1]) {
+				swap(i, i - 1);
+			}
+		}
+		i--;
+	}
+}
+
+/**
+ * Swaps two values in the data array.
+ *
+ * @param a	value in data array to be swapped with the value in b parameter
+ * @param b	value in data array to be swapped with the value in a parameter
+ */
+void BubbleSort::swap(int a, int b) {
+	int tmp = data[a];
+	data[a] = data[b];
+	data[b] = tmp;
+}
+
+//================================================================
+
+void BubbleSort::print_data(void) {
+	for (size_t i = 0; i < nElems; i++) {
+		cout << '\t' << i << " :\t" << data[i] << endl;
+	}
+}
+
+#pragma once
+
+class SelectionSort {
+public:
+	SelectionSort(int nElems, int data[]);
+	void display_data(void);
+
+private:
+	int nElems = 1;
+	int *data = new int[nElems];
+	void swap(int a, int b);
+};
+
+#include "stdafx.h"
+#include <iostream>
+//#include "BubbleSort.h"
+//#include "BubbleSortNaw.h"
+#include "SelectionSort.h"
+
+using namespace std;
+
+int main() {
+
+	const int nElems = 10;
+	int data[nElems] = { 7, 3, 8, 1, 2, 5, 4, 6, 9, 0 };
+
+	// - write a selection sort algorithm
+	SelectionSort sSort(nElems, data);
+	// sSort.display_data();
+
+	cin.get();
+	return 0;
+}
+
+
+/*
+int main() {
+
+	NAW naw1;
+	NAW naw2;
+	NAW naw3;
+	NAW naw4;
+	NAW naw5;
+	NAW naw6;
+
+	const int nElems = 6;
+
+	NAW testData[nElems] = {naw1, naw2, naw3, naw4, naw5, naw6};
+
+	testData[0].set_naam("Rick");
+	testData[1].set_naam("Chris");
+	testData[2].set_naam("Laura");
+	testData[3].set_naam("David");
+	testData[4].set_naam("Heleen");
+	testData[5].set_naam("Alvin");
+
+	testData[0].set_woonplaats("Den Bosch");
+	testData[1].set_woonplaats("Den Bosch");
+	testData[2].set_woonplaats("Aruba");
+	testData[3].set_woonplaats("Columbia");
+	testData[4].set_woonplaats("Aruba");
+	testData[5].set_woonplaats("Aruba");
+
+	// - Sort the NAW - algorithm
+	BubbleSortNaw bList(nElems, testData);
+
+	// sort by woonplaats
+	bList.sort_by_woonplaats();
+	cout << "Na het sorteren van woonplaats" << endl;
+	cout << "======================================" << endl;
+	bList.display_list();
+	cout << endl;
+
+
+	// sort by naam
+	bList.sort_by_naam();
+	cout << "Na het sorteren van naam" << endl;
+	cout << "======================================" << endl;
+	bList.display_list();	
+	cout << endl;
+
+	// sort by woonplaats
+	bList.sort_by_woonplaats();
+	cout << "Na het sorteren van woonplaats" << endl;
+	cout << "======================================" << endl;
+	bList.display_list();
+	cout << endl;
+
+
+	cin.get();
+    return 0;
+}*/
+
+
+// TODO
+// - study: Bubble sort (pg. 86)
+// - study: Selection sort (pg. 93 and 94)
+// - study: Insertion sort (pg. 101 and 102)
