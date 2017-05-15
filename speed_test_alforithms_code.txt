@@ -1,41 +1,358 @@
-#pragma once
-
-class BubbleSort {
-public:
-	BubbleSort(int nElems, int data[]);
-	void sort(void);
-	void print_data(void);
-	void sort_first_elem(void);
-
-private:
-	int nElems = 1;
-	int *data = new int[nElems];
-	void swap(int a, int b);
-};
-
 #include "stdafx.h"
 #include "SelectionSort.h"
 #include <iostream>
 
 using namespace std;
 
-SelectionSort::SelectionSort(int nElems, int data[]) {
-	for (size_t i = 0; i < nElems; i++) {
-		this->data[i] = data[i];
-		cout << data[i] << endl;
+//================================================================
+
+void SelectionSort::selection_sort(void) {
+	int out, in, max;
+
+	for (out = nElems-1; out > - 1; out--) {
+		max = out;
+
+		for (in = out - 1; in > -1; in--) {
+			if (data[in] > data[max]) {
+				max = in;
+			}
+		}
+		swap(out, max); 
 	}
 }
 
+//================================================================
+
 void SelectionSort::display_data(void) {
 	for (size_t i = 0; i < nElems; i++) {
-		cout << data[i] << endl;;
+		cout << data[i] << " ";
 	}
+	cout << endl;
 }
 
 void SelectionSort::swap(int a, int b) {
 	int tmp = data[a];
 	data[a] = data[b];
 	data[b] = tmp;
+}
+
+#include "stdafx.h"
+#include "NAW.h"
+
+string NAW::get_naam(void) { return naam; }
+
+string NAW::get_adres(void) { return adres; }
+
+string NAW::get_woonplaats(void) { return woonplaats; }
+
+void NAW::set_naam(string naam) { this->naam = naam; }
+
+void NAW::set_adres(string adres) { this->adres = adres; }
+
+void NAW::set_woonplaats(string woonplaats) { this->woonplaats = woonplaats; }
+
+/**
+* naam is te controleren naam van een NAW object
+*
+* return
+* true: als parameter naam gelijk is aan de naam van object
+* false: in alle andere gevallen
+*
+*/
+bool NAW::heeft_naam(string naam) {
+	return (this->naam == naam);
+}
+
+/**
+* adres is te controleren adres van een NAW object
+*
+* return
+* true: als parameter adres gelijk is aan de adres van object
+* false: in alle andere gevallen
+*
+*/
+bool NAW::heeft_adres(string adres) {
+	return (this->adres == adres);
+}
+
+/**
+* woonplaats is te controleren woonplaats van een NAW object
+*
+* return
+* true: als parameter woonplaats gelijk is aan de woonplaats van object
+* false: in alle andere gevallen
+*
+*/
+bool NAW::heeft_woonplaats(string woonplaats) {
+	return (this->woonplaats == woonplaats);
+}
+
+int NAW::compare_to(NAW naw) {
+	int compareWoonplaats = woonplaats.compare(naw.woonplaats);
+	int compareNaam = naam.compare(naw.naam);
+	int compareAdres = adres.compare(naw.adres);
+
+	if (compareWoonplaats == 0) {
+		if (compareNaam == 0) {
+			return compareAdres;
+		}
+	}
+	return -1;
+}
+
+#include "stdafx.h"
+#include "Link.h"
+#include <iostream>
+
+using namespace std;
+
+// - read page 186
+// - read page 188
+// - read page 189
+// - read page 194
+// - read page 198 - 200
+// - read page 215 - 217
+// - read page 221 - 231
+// - read chapter 5 completely
+
+#include "stdafx.h"
+#include "InsertionSort.h"
+#include <iostream>
+
+using namespace std;
+
+//================================================================
+
+void InsertionSort::insertion_sort(int initIndex) {
+	int in, out;
+
+	for (out = initIndex; out< nElems; out++) {
+		long temp = rij[out];
+		in = out;
+		
+		while ((in > 0) && (rij[in - 1] >= temp)) {
+			rij[in] = rij[in - 1]; 
+			--in;
+		}
+		rij[in] = temp;
+	}
+}
+
+//================================================================
+
+void InsertionSort::display_data(void) {
+	for (size_t i = 0; i < nElems; i++) {
+		cout << rij[i] << " ";
+	}
+	cout << endl;
+}
+
+void InsertionSort::swap(int a, int b) {
+	int tmp = rij[a];
+	rij[a] = rij[b];
+	rij[b] = tmp;
+}
+
+#include "stdafx.h"
+#include <iostream>
+//#include "BubbleSort.h"
+//#include "BubbleSortNaw.h"
+// #include "SelectionSort.h"
+#include "InsertionSort.h"
+
+using namespace std;
+
+int main() {
+
+	// const int nElems = 10;
+	// int data[nElems] = { 7, 3, 8, 1, 2, 5, 4, 6, 9, 0 };
+
+	// - write a selection sort algorithm
+	// SelectionSort sSort;
+	// sSort.selection_sort();
+	// sSort.display_data();
+		
+	InsertionSort iSort;
+	iSort.insertion_sort(4);
+	iSort.display_data();
+
+	cin.get();
+	return 0;
+}
+
+
+/*
+int main() {
+
+	NAW naw1;
+	NAW naw2;
+	NAW naw3;
+	NAW naw4;
+	NAW naw5;
+	NAW naw6;
+
+	const int nElems = 6;
+
+	NAW testData[nElems] = {naw1, naw2, naw3, naw4, naw5, naw6};
+
+	testData[0].set_naam("Rick");
+	testData[1].set_naam("Chris");
+	testData[2].set_naam("Laura");
+	testData[3].set_naam("David");
+	testData[4].set_naam("Heleen");
+	testData[5].set_naam("Alvin");
+
+	testData[0].set_woonplaats("Den Bosch");
+	testData[1].set_woonplaats("Den Bosch");
+	testData[2].set_woonplaats("Aruba");
+	testData[3].set_woonplaats("Columbia");
+	testData[4].set_woonplaats("Aruba");
+	testData[5].set_woonplaats("Aruba");
+
+	// - Sort the NAW - algorithm
+	BubbleSortNaw bList(nElems, testData);
+
+	// sort by woonplaats
+	bList.sort_by_woonplaats();
+	cout << "Na het sorteren van woonplaats" << endl;
+	cout << "======================================" << endl;
+	bList.display_list();
+	cout << endl;
+
+
+	// sort by naam
+	bList.sort_by_naam();
+	cout << "Na het sorteren van naam" << endl;
+	cout << "======================================" << endl;
+	bList.display_list();	
+	cout << endl;
+
+	// sort by woonplaats
+	bList.sort_by_woonplaats();
+	cout << "Na het sorteren van woonplaats" << endl;
+	cout << "======================================" << endl;
+	bList.display_list();
+	cout << endl;
+
+
+	cin.get();
+    return 0;
+}*/
+
+/*===============================================================
+* Class for sorting NAW objects
+*===============================================================
+*	@author		Rick Kock
+*	@version	1
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+
+#include "stdafx.h"
+#include "BubbleSortNaw.h"
+
+BubbleSortNaw::BubbleSortNaw(int nElems, NAW nawList[]) : nElems(nElems) {
+	for (size_t i = 0; i < nElems; i++) {
+		this->nawList[i] = nawList[i];
+	}
+}
+
+//================================================================
+
+/**
+* Uses bubble sort: sort data array by going through the array
+* and checks if the next integer is bigger than the current integer
+* value. If the next integer is smaller, the values should be swapped.
+*/
+void BubbleSortNaw::sort(void) {
+	for (int i = nElems; i > -1; i--) {
+		sort_first_elem();
+	}
+}
+
+/**
+* Sorts the elements in pairs only one time.
+*/
+void BubbleSortNaw::sort_first_elem(void) {
+	//int i = nElems - 1;
+
+	//while (i > -1) {
+
+	//	// check to see if not beyond beginning of array
+	//	if ((i - 1) > -1) {
+	//		if (nawList[i]nawList[i - 1]) {
+	//			swap(i, i - 1);
+	//		}
+	//	}
+	//	i--;
+	//}
+
+	
+}
+
+//================================================================
+
+void BubbleSortNaw::sort_by_naam(void) {
+	int outer, inner;
+	NAW tmp;
+
+	for (outer = nElems - 1; outer > -1; outer--) {
+		for (inner = 0; inner < outer; inner++) {
+			string firstLetterInner = nawList[inner].get_naam().substr(0, 1);
+			string firstLetterNext = nawList[inner + 1].get_naam().substr(0, 1);
+
+			if (firstLetterInner.compare(firstLetterNext) >= 0) {
+				tmp = nawList[inner + 1];
+				nawList[inner + 1] = nawList[inner];
+				nawList[inner] = tmp;
+			}
+		}
+	}
+}
+
+void BubbleSortNaw::sort_by_woonplaats(void) {
+	int outer, inner;
+	NAW tmp;
+
+	for (outer = nElems - 1; outer > -1; outer--) {
+		for (inner = 0; inner < outer; inner++) {
+			string firstLetterInner = nawList[inner].get_woonplaats().substr(0, 1);
+			string firstLetterNext = nawList[inner + 1].get_woonplaats().substr(0, 1);
+
+			if (firstLetterInner.compare(firstLetterNext) >= 0) {
+				tmp = nawList[inner + 1];
+				nawList[inner + 1] = nawList[inner];
+				nawList[inner] = tmp;
+			}
+		}
+	}
+}
+
+//================================================================
+
+/**
+* Swaps two values in the data array.
+*
+* @param a	value in data array to be swapped with the value in b parameter
+* @param b	value in data array to be swapped with the value in a parameter
+*/
+void BubbleSortNaw::swap(int a, int b) {
+	NAW tmp = nawList[a];
+	nawList[a] = nawList[b];
+	nawList[b] = tmp;
+}
+
+void BubbleSortNaw::display_list(void) {
+	for (int i = 0; i < nElems; i++) {
+		cout << "Naam:\t" << nawList[i].get_naam() << '\t';
+		cout << "Woonplaats:\t" << nawList[i].get_woonplaats() << endl;
+	}
 }
 
 /*===============================================================
@@ -122,97 +439,94 @@ void BubbleSort::print_data(void) {
 
 class SelectionSort {
 public:
-	SelectionSort(int nElems, int data[]);
+	void selection_sort(void);
 	void display_data(void);
+
+private:
+	static const int nElems = 10;
+	// int *data = new int[nElems];
+	int data[nElems] = { 7, 3, 8, 1, 2, 5, 4, 6, 9, 0 };
+	void swap(int a, int b);
+};
+
+#pragma once
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class NAW {
+private:
+	string naam;
+	string adres;
+	string woonplaats;
+
+public:
+	string get_naam(void);
+	string get_adres(void);
+	string get_woonplaats(void);
+
+	void set_naam(string naam);
+	void set_adres(string adres);
+	void set_woonplaats(string woonplaats);
+
+	bool heeft_naam(string naam);
+	bool heeft_adres(string adres);
+	bool heeft_woonplaats(string woonplaats);
+
+	int compare_to(NAW naw);
+};
+
+#pragma once
+
+class Link {
+public:
+private:
+};
+
+#pragma once
+
+class InsertionSort {
+public:
+	void insertion_sort(int initIndex);
+	void display_data(void);
+
+private:
+	static const int nElems = 10;
+	// int *data = new int[nElems];
+	int rij[nElems] = { 7, 3, 8, 1, 2, 5, 4, 6, 9, 0 };
+	void swap(int a, int b);
+};
+
+#pragma once
+#include "Naw.h"
+
+class BubbleSortNaw {
+public:
+	BubbleSortNaw(int nElems, NAW nawList[]);
+	void sort(void);
+	void display_list(void);
+	void sort_first_elem(void);
+	void sort_by_naam(void);
+	void sort_by_woonplaats(void);
+
+private:
+	int nElems = 1;
+	NAW *nawList = new NAW[nElems];
+	void swap(int a, int b);
+};
+
+#pragma once
+
+class BubbleSort {
+public:
+	BubbleSort(int nElems, int data[]);
+	void sort(void);
+	void print_data(void);
+	void sort_first_elem(void);
 
 private:
 	int nElems = 1;
 	int *data = new int[nElems];
 	void swap(int a, int b);
 };
-
-#include "stdafx.h"
-#include <iostream>
-//#include "BubbleSort.h"
-//#include "BubbleSortNaw.h"
-#include "SelectionSort.h"
-
-using namespace std;
-
-int main() {
-
-	const int nElems = 10;
-	int data[nElems] = { 7, 3, 8, 1, 2, 5, 4, 6, 9, 0 };
-
-	// - write a selection sort algorithm
-	SelectionSort sSort(nElems, data);
-	// sSort.display_data();
-
-	cin.get();
-	return 0;
-}
-
-
-/*
-int main() {
-
-	NAW naw1;
-	NAW naw2;
-	NAW naw3;
-	NAW naw4;
-	NAW naw5;
-	NAW naw6;
-
-	const int nElems = 6;
-
-	NAW testData[nElems] = {naw1, naw2, naw3, naw4, naw5, naw6};
-
-	testData[0].set_naam("Rick");
-	testData[1].set_naam("Chris");
-	testData[2].set_naam("Laura");
-	testData[3].set_naam("David");
-	testData[4].set_naam("Heleen");
-	testData[5].set_naam("Alvin");
-
-	testData[0].set_woonplaats("Den Bosch");
-	testData[1].set_woonplaats("Den Bosch");
-	testData[2].set_woonplaats("Aruba");
-	testData[3].set_woonplaats("Columbia");
-	testData[4].set_woonplaats("Aruba");
-	testData[5].set_woonplaats("Aruba");
-
-	// - Sort the NAW - algorithm
-	BubbleSortNaw bList(nElems, testData);
-
-	// sort by woonplaats
-	bList.sort_by_woonplaats();
-	cout << "Na het sorteren van woonplaats" << endl;
-	cout << "======================================" << endl;
-	bList.display_list();
-	cout << endl;
-
-
-	// sort by naam
-	bList.sort_by_naam();
-	cout << "Na het sorteren van naam" << endl;
-	cout << "======================================" << endl;
-	bList.display_list();	
-	cout << endl;
-
-	// sort by woonplaats
-	bList.sort_by_woonplaats();
-	cout << "Na het sorteren van woonplaats" << endl;
-	cout << "======================================" << endl;
-	bList.display_list();
-	cout << endl;
-
-
-	cin.get();
-    return 0;
-}*/
-
-
-// TODO
-// - study: Bubble sort (pg. 86)
-// - study: Selection sort (pg. 93 and 94)
-// - study: Insertion sort (pg. 101 and 102)
